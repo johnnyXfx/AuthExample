@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-login-button',
@@ -8,13 +9,16 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class LoginButtonComponent implements OnInit {
 
-  constructor(private auth: AuthService) {}
+  constructor(public oidcSecurityService: OidcSecurityService) {}
 
   login() {
-    this.auth.loginWithRedirect();
+    this.oidcSecurityService.authorize();
   }
 
   ngOnInit(): void {
+    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
+      /*...*/
+    });
   }
 
 }
