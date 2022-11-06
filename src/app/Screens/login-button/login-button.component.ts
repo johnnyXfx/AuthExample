@@ -16,9 +16,20 @@ export class LoginButtonComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
       /*...*/
+      if(isAuthenticated){
+        this.oidcSecurityService.getAccessToken().subscribe((token) => {
+          /*const httpOptions = {
+            headers: new HttpHeaders({
+              Authorization: 'Bearer ' + token,
+            }),
+          };*/
+        });
+      }
     });
+
   }
 
 }
